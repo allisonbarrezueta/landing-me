@@ -1,15 +1,12 @@
-import Section1 from "@/components/Section1";
 import AboutMe from "@/components/about-me";
-import Header from "@/components/header";
-import Image from "next/image";
+import Introduction from "@/components/introduction";
+import MyStack from "@/components/my-stack";
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between pt-32">
-      <section className="">
-        <h1>hello world</h1>
-      </section>
-      <Section1 />
+    <main className="flex min-h-screen flex-col items-center justify-between pt-20">
+      <Introduction />
+      <MyStack />
       <AboutMe />
     </main>
   );
