@@ -1,12 +1,30 @@
+"use client";
 import Image from "next/image";
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import reactJS from "../../public/react.jpg";
 import vuejs from "../../public/vue.jpg";
 import js from "../../public/js.png";
 import typescript from "../../public/typescript.png";
+import github from "../../public/github.svg";
 
 const MyStack = () => {
   const components = ["dashboard", "charts", "forms", "tables", "maps"];
+  const [isVisible, setVisible] = useState(true);
+  const domRef = useRef<HTMLImageElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => setVisible(entry.isIntersecting));
+    });
+
+    const currentRef = domRef.current;
+
+    currentRef && observer.observe(currentRef);
+
+    return () => {
+      currentRef && observer.unobserve(currentRef);
+    };
+  }, []);
 
   const card1 = [
     {
@@ -42,15 +60,31 @@ const MyStack = () => {
   ];
 
   return (
-    <section className="text-gray-600 bg-blueGray-100 dark:bg-black w-full">
-      <div className="container px-5 py-24 mx-auto">
+    <section
+      id="my-stack"
+      className="text-gray-600 bg-blueGray-100 dark:bg-black w-full relative overflow-x-hidden"
+    >
+      <Image
+        alt="github icon"
+        src={github}
+        className={`hidden md:flex absolute top-0 -right-48 fade-right-section ${
+          isVisible && "is-visible"
+        }`}
+        ref={domRef}
+      />
+      <div className="container px-5 py-16 md:py-24 mx-auto">
         <div className="flex flex-wrap w-full mb-20 flex-col items-center text-center">
-          <h1 className="sm:text-3xl text-2xl font-medium title-font mb-2 text-gray-900 dark:text-white">
-            About my stack
+          <Image
+            alt="github icon"
+            src={github}
+            className={`flex md:hidden w-1/2 mb-12`}
+          />
+          <h1 className="sm:text-3xl text-2xl font-medium title-font mb-2 text-primary-900 dark:text-white">
+            🔋 Some of my stack 🔋
           </h1>
           <p className="lg:w-1/2 w-full leading-relaxed text-gray-500">
-            Whatever cardigan tote bag tumblr hexagon brooklyn asymmetrical
-            gentrify, subway tile poke farm-to-table.
+            Whatever stack I choose to endeavor, I always make sure to deliver.
+            Once you know the logic, the syntax is just a matter of time.
           </p>
         </div>
 
@@ -113,7 +147,7 @@ const MyStack = () => {
               </div>
             </div>
           </div>
-          <div className="w-full md:w-4/12 px-12 md:px-4 ml-auto mr-auto mt-48">
+          <div className="w-full md:w-4/12 px-12 md:px-4 ml-auto mr-auto mt-24 md:mt-48">
             <h3 className="text-3xl mb-2 font-semibold leading-normal dark:text-white">
               Some of the tech I use...
             </h3>
@@ -124,7 +158,7 @@ const MyStack = () => {
             <p className="text-lg font-light leading-relaxed mt-4 mb-4 text-blueGray-600">
               Also, some components I&apos;ve built over time are
             </p>
-            <div className="block pb-6">
+            <div className="block pb-6 mx-auto md:mx-0">
               {components.map((component, index) => (
                 <span
                   key={index}

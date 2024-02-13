@@ -7,30 +7,42 @@ const Footer = (props: Props) => {
   return (
     <footer className="dark:text-white text-gray-600 body-font">
       <div className="container px-5 py-24 mx-auto">
-        <div className="flex flex-wrap md:text-left text-center order-first">
+        <div className="flex flex-wrap md:text-left text-center order-first md:justify-evenly">
           <div className="lg:w-1/4 md:w-1/2 w-full px-4">
             <h2 className="title-font font-medium text-gray-900 dark:text-white tracking-widest text-sm mb-3">
-              CATEGORIES
+              Menu
             </h2>
-            <nav className="list-none mb-10">
+            <nav className="list-none mb-10 space-y-4">
               <li>
-                <a className="dark:text-white text-gray-600 hover:text-gray-800">
-                  First Link
+                <a
+                  href="#home"
+                  className="dark:text-white text-gray-600 hover:text-primary-800"
+                >
+                  Home
                 </a>
               </li>
               <li>
-                <a className="dark:text-white text-gray-600 hover:text-gray-800">
-                  Second Link
+                <a
+                  href="#portfolio"
+                  className="dark:text-white text-gray-600 hover:text-primary-800"
+                >
+                  Portfolio
                 </a>
               </li>
               <li>
-                <a className="dark:text-white text-gray-600 hover:text-gray-800">
-                  Third Link
+                <a
+                  href="#my-stack"
+                  className="dark:text-white text-gray-600 hover:text-primary-800"
+                >
+                  My Stack
                 </a>
               </li>
               <li>
-                <a className="dark:text-white text-gray-600 hover:text-gray-800">
-                  Fourth Link
+                <a
+                  href="#contact"
+                  className="dark:text-white text-gray-600 hover:text-primary-800"
+                >
+                  About Me
                 </a>
               </li>
             </nav>

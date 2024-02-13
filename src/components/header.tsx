@@ -1,10 +1,28 @@
-import React from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import myBrand from "../../public/alliBrand.svg";
+import Link from "next/link";
 
 type Props = {};
 
 const Header = (props: Props) => {
+  const [isChecked, setIsChecked] = useState(false);
+
+  useEffect(() => {
+    if (isChecked) {
+      localStorage.setItem("theme", "dark");
+      document.documentElement.classList.add("dark");
+    } else {
+      localStorage.setItem("theme", "light");
+      document.documentElement.classList.remove("dark");
+    }
+  }, [isChecked]);
+
+  const handleAll = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setIsChecked(event.target.checked);
+  };
+
   return (
     <header className="text-gray-600 bg-white shadow-lg fixed w-full z-50">
       <div className="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
@@ -66,28 +84,46 @@ const Header = (props: Props) => {
             </defs>
           </svg>
 
-          <span className="ml-3 text-xl">Allison</span>
+          <span className="ml-3 text-xl text-primary-800">Allison</span>
         </a>
         <nav className="md:mr-auto md:ml-4 md:py-1 md:pl-4 md:border-l md:border-gray-400	flex flex-wrap items-center text-base justify-center">
-          <a className="mr-5 cursor-pointer hover:text-gray-900">Home</a>
-          <a className="mr-5 cursor-pointer hover:text-gray-900">Portfolio</a>
-          <a className="mr-5 cursor-pointer hover:text-gray-900">About me</a>
-          <a className="mr-5 cursor-pointer hover:text-gray-900">Contact</a>
-        </nav>
-        <button className="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0">
-          Button
-          <svg
-            fill="none"
-            stroke="currentColor"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            className="w-4 h-4 ml-1"
-            viewBox="0 0 24 24"
+          <Link
+            href={"#home"}
+            className="mr-5 cursor-pointer hover:text-primary-800"
           >
-            <path d="M5 12h14M12 5l7 7-7 7"></path>
-          </svg>
-        </button>
+            Home
+          </Link>
+          <Link
+            href={"#portfolio"}
+            className="mr-5 cursor-pointer hover:text-primary-800"
+          >
+            Portfolio
+          </Link>
+          <Link
+            href={"#my-stack"}
+            className="mr-5 cursor-pointer hover:text-primary-800"
+          >
+            My Stack
+          </Link>
+          <Link
+            href={"#about-me"}
+            className="mr-5 cursor-pointer hover:text-primary-800"
+          >
+            About me
+          </Link>
+        </nav>
+
+        <div className="flex flex-row items-center mt-4 md:mt-0">
+          <input
+            type="checkbox"
+            id="toggle"
+            className="toggle--checkbox"
+            onChange={handleAll}
+          />
+          <label htmlFor="toggle" className="toggle--label">
+            <span className="toggle--label-background"></span>
+          </label>
+        </div>
       </div>
     </header>
   );
