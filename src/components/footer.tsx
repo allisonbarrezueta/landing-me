@@ -39,7 +39,7 @@ const Footer = (props: Props) => {
               </li>
               <li>
                 <a
-                  href="#contact"
+                  href="#about-me"
                   className="dark:text-white text-gray-600 hover:text-primary-800"
                 >
                   About Me

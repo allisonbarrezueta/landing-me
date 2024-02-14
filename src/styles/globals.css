@@ -36,6 +36,7 @@
     visibility 1200ms ease-out;
   will-change: opacity, transform, visibility;
 }
+
 .fade-in-section.is-visible {
   opacity: 1;
   transform: none;

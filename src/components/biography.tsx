@@ -46,7 +46,7 @@ const Biography = (props: Props) => {
         </h1>
       </div>
       <div className="container px-5 py-24 mx-auto flex flex-wrap items-center">
-        <div className="w-1/3">
+        <div className="w-full rounded-lg border-primary-600 my-2 md:my-0 border-b border-l p-4 md:p-0 md:w-1/3 md:border-0 md:rounded-none">
           <p className="dark:text-white text-primary-800 text-2xl text-right leading-10">
             Hey there! I&apos;m Allison Barrezueta, a frontend developer
             passionate about crafting immersive user experiences. With a
@@ -55,10 +55,10 @@ const Biography = (props: Props) => {
             (ES6+), and frameworks like React.js.{" "}
           </p>
         </div>
-        <div className="w-1/3">
+        <div className="hidden md:flex md:w-1/3">
           <Image alt="jumping me" src={jumpingme} className="floating" />
         </div>
-        <div className="w-1/3">
+        <div className="w-full rounded-lg border-primary-600 my-2 md:my-0 border-t border-r p-4 md:p-0 md:w-1/3 md:border-0 md:rounded-none">
           <p className="dark:text-white text-primary-800 text-2xl leading-10">
             My projects often feature dynamic dashboards, interactive charts,
             and responsive layouts, reflecting my commitment to delivering
