@@ -48,7 +48,7 @@ const Footer = (props: Props) => {
             </nav>
           </div>
 
-          <div className="lg:w-1/4 md:w-1/2 w-full px-4">
+          {/* <div className="lg:w-1/4 md:w-1/2 w-full px-4">
             <h2 className="title-font font-medium dark:text-white text-gray-900 tracking-widest text-sm mb-3">
               SUBSCRIBE
             </h2>
@@ -73,7 +73,7 @@ const Footer = (props: Props) => {
               <br className="lg:block hidden" />
               waistcoat green juice
             </p>
-          </div>
+          </div> */}
         </div>
       </div>
       <div className="bg-gray-100">
