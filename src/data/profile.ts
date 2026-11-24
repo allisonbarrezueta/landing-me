@@ -8,7 +8,8 @@ export const profile = {
   siteUrl: "https://allisonbarrezueta.dev", // TODO: confirm production URL
   quote: "Once you know the logic, the rest is just syntax",
   bio: [
-    "I'm a full-stack engineer who enjoys the whole path from a rough idea to something people use every day. I work across a startup (Python microservices, Node/TypeScript, React, PostgreSQL, GraphQL) and a mobile company, where I build React Native apps alongside Node, MongoDB and GraphQL services.",
-    "With a background in Computer Science and Economics, I care about the why behind a feature as much as the how: clear data models, honest trade-offs, and interfaces that feel effortless. I communicate early and often, which keeps teams fast.",
+    "I'm a full-stack engineer who likes owning a feature from the first sketch to the moment people use it. Day to day I split my time between a startup, where I work on Python microservices, Node and TypeScript APIs, React and PostgreSQL, and a mobile company, where I build React Native apps on top of Node, MongoDB and GraphQL.",
+    "My path is a bit unusual: I studied Computer Science and Economics, then completed a Master's in Big Data & Analytics. That mix shapes how I work. I ask what problem a feature solves before I build it, I favor clear data models and honest trade-offs, and I keep the interface simple enough that nobody needs a manual.",
+    "I communicate early and often, write code my teammates enjoy reading, and I'm happiest on small, ambitious teams where I can move between the app, the API and the database.",
   ],
 } as const;
