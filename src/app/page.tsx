@@ -1,17 +1,19 @@
-import AboutMe from "@/components/about-me";
-import Biography from "@/components/biography";
-import Introduction from "@/components/introduction";
-import MyPortfolio from "@/components/my-portfolio";
-import MyStack from "@/components/my-stack";
+import Hero from "@/components/sections/hero";
+import Projects from "@/components/sections/projects";
+import Stack from "@/components/sections/stack";
+import About from "@/components/sections/about";
+import Education from "@/components/sections/education";
+import Contact from "@/components/sections/contact";
 
-export default function Home() {
+export default function Home(): React.JSX.Element {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between pt-36 md:pt-20">
-      <Introduction />
-      <MyStack />
-      <MyPortfolio />
-      <Biography />
-      <AboutMe />
+    <main>
+      <Hero />
+      <Projects />
+      <Stack />
+      <About />
+      <Education />
+      <Contact />
     </main>
   );
 }
