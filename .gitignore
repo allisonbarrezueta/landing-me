@@ -38,3 +38,5 @@ next-env.d.ts
 .early.coverage
 coverage/
 .early.coverage/
+.env
+.env.local

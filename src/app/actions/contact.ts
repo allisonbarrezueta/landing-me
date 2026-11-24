@@ -3,6 +3,7 @@ import { headers } from "next/headers";
 import { contactSchema } from "@/lib/contact-schema";
 import type { ContactFieldErrors, ContactResult } from "@/lib/contact-schema";
 import { isRateLimited } from "@/lib/rate-limit";
+import { singleLine } from "@/lib/sanitize";
 
 export async function sendContactMessage(input: unknown): Promise<ContactResult> {
   const parsed = contactSchema.safeParse(input);
@@ -35,8 +36,8 @@ export async function sendContactMessage(input: unknown): Promise<ContactResult>
         from: CONTACT_FROM_EMAIL,
         to: [CONTACT_TO_EMAIL],
         reply_to: email,
-        subject: `Portfolio message from ${name}`,
-        text: `From: ${name} <${email}>\n\n${message}`,
+        subject: `Portfolio message from ${singleLine(name)}`,
+        text: `From: ${singleLine(name)} <${email}>\n\n${message}`,
       }),
     });
     if (!res.ok) return { ok: false, error: "Could not send your message. Please try again." };

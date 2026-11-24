@@ -15,6 +15,13 @@ describe("toRepos", () => {
   });
 });
 
+describe("toRepos url safety", () => {
+  it("drops repos whose url is not https://github.com", () => {
+    const out = toRepos([repo("ok", 1), repo("bad", 9, { html_url: "javascript:alert(1)" })]);
+    expect(out.map((r) => r.name)).toEqual(["ok"]);
+  });
+});
+
 describe("fetchRepos", () => {
   it("returns [] when the request fails", async () => {
     vi.stubGlobal("fetch", vi.fn().mockRejectedValue(new Error("offline")));

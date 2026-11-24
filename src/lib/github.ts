@@ -17,9 +17,11 @@ interface GithubRepoResponse {
   pushed_at: string;
 }
 
+const isGithubUrl = (url: string): boolean => /^https:\/\/github\.com\//.test(url);
+
 export function toRepos(raw: readonly GithubRepoResponse[], limit = 6): Repo[] {
   return raw
-    .filter((r) => !r.fork && !r.archived)
+    .filter((r) => !r.fork && !r.archived && isGithubUrl(r.html_url))
     .sort((a, b) => b.stargazers_count - a.stargazers_count || b.pushed_at.localeCompare(a.pushed_at))
     .slice(0, limit)
     .map((r) => ({
