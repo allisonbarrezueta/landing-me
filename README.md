@@ -42,3 +42,15 @@ Without these the form shows a "not configured" message instead of failing silen
 ## Projects
 
 The Projects section lists your top public non-fork repos from GitHub (`profile.github`), cached for 1 hour. It hides itself if GitHub is unreachable.
+
+## Email deliverability checklist
+
+Code side (already done): sent from your verified domain with the visitor only in `Reply-To`, `[Landing Page]` subject prefix, plain-text + HTML parts with escaped content, idempotent sends with one retry.
+
+DNS side (you must do this in your domain provider; Resend shows the exact records):
+
+1. **SPF** and **DKIM**: add the records Resend gives you under Domains and wait for "Verified".
+2. **DMARC**: add a TXT record on `_dmarc.yourdomain.com`, e.g. `v=DMARC1; p=none; rua=mailto:you@yourdomain.com`, then tighten to `quarantine` once reports look clean.
+3. Send from a subdomain (e.g. `mail.yourdomain.com`) to protect your main domain's reputation.
+4. Set `CONTACT_FROM_EMAIL` to an address on that verified domain; never use the visitor's address as sender.
+5. Send yourself a test and mark it "Not spam" once; add the sender to your contacts so replies stay out of spam.

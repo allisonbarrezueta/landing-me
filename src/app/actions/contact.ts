@@ -3,7 +3,7 @@ import { headers } from "next/headers";
 import { contactSchema } from "@/lib/contact-schema";
 import type { ContactFieldErrors, ContactResult } from "@/lib/contact-schema";
 import { isRateLimited } from "@/lib/rate-limit";
-import { singleLine } from "@/lib/sanitize";
+import { buildContactEmail } from "@/lib/contact-email";
 
 export async function sendContactMessage(input: unknown): Promise<ContactResult> {
   const parsed = contactSchema.safeParse(input);
@@ -27,22 +27,28 @@ export async function sendContactMessage(input: unknown): Promise<ContactResult>
     return { ok: false, error: "Contact form is not configured yet." };
   }
 
-  const { name, email, message } = parsed.data;
-  try {
-    const res = await fetch("https://api.resend.com/emails", {
-      method: "POST",
-      headers: { Authorization: `Bearer ${RESEND_API_KEY}`, "Content-Type": "application/json" },
-      body: JSON.stringify({
-        from: CONTACT_FROM_EMAIL,
-        to: [CONTACT_TO_EMAIL],
-        reply_to: email,
-        subject: `Portfolio message from ${singleLine(name)}`,
-        text: `From: ${singleLine(name)} <${email}>\n\n${message}`,
-      }),
-    });
-    if (!res.ok) return { ok: false, error: "Could not send your message. Please try again." };
-    return { ok: true };
-  } catch {
-    return { ok: false, error: "Could not send your message. Please try again." };
+  const payload = buildContactEmail(parsed.data, { from: CONTACT_FROM_EMAIL, to: CONTACT_TO_EMAIL });
+  // Same key on retry so Resend never delivers the message twice.
+  const idempotencyKey = crypto.randomUUID();
+  const failure: ContactResult = { ok: false, error: "Could not send your message. Please try again." };
+
+  for (let attempt = 0; attempt < 2; attempt++) {
+    try {
+      const res = await fetch("https://api.resend.com/emails", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${RESEND_API_KEY}`,
+          "Content-Type": "application/json",
+          "Idempotency-Key": idempotencyKey,
+        },
+        body: JSON.stringify(payload),
+        signal: AbortSignal.timeout(8000),
+      });
+      if (res.ok) return { ok: true };
+      if (res.status < 500) return failure; // client error: retrying will not help
+    } catch {
+      // network error or timeout: fall through to one retry
+    }
   }
+  return failure;
 }
