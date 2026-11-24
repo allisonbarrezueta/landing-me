@@ -6,7 +6,7 @@ export const profile = {
     "I build products end to end: polished React and React Native interfaces backed by reliable Node, Python and PostgreSQL services.",
   github: "allisonbarrezueta",
   siteUrl: "https://allisonbarrezueta.dev", // TODO: confirm production URL
-  quote: "Once you know the logic, the rest is just syntax",
+  quote: "Master the logic once, and every language is just a dialect.",
   bio: [
     "I'm a full-stack engineer who likes owning a feature from the first sketch to the moment people use it. Day to day I split my time between a startup, where I work on Python microservices, Node and TypeScript APIs, React and PostgreSQL, and a mobile company, where I build React Native apps on top of Node, MongoDB and GraphQL.",
     "My path is a bit unusual: I studied Computer Science and Economics, then completed a Master's in Big Data & Analytics. That mix shapes how I work. I ask what problem a feature solves before I build it, I favor clear data models and honest trade-offs, and I keep the interface simple enough that nobody needs a manual.",
