@@ -1,36 +1,56 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# landing-me
 
-## Getting Started
+Personal landing page for Allison Barrezueta. Next.js 16 (App Router), React 19, Tailwind CSS 4, TypeScript.
 
-First, run the development server:
+## Scripts
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+| Command | What it does |
+| --- | --- |
+| `npm run dev` | Dev server |
+| `npm run build` / `npm start` | Production build / serve |
+| `npm run lint` | ESLint (flat config) |
+| `npm run typecheck` | `tsc --noEmit` |
+| `npm test` | Vitest + Testing Library |
+
+Requires Node >= 20.9.
+
+## Structure
+
+```
+src/
+  app/            routes, metadata, sitemap/robots, server actions (contact)
+  components/
+    layout/       header, footer, theme toggle
+    sections/     hero, projects, stack, about, education, contact
+    ui/           section, reveal, tag, contact-form
+  hooks/          use-in-view, use-theme, use-contact-form
+  data/           typed content: profile, stack, education, socials, nav
+  lib/            github fetcher, contact schema, rate limiter
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Edit content in `src/data/`; components stay free of copy.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Contact form
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Copy `.env.example` to `.env.local` and fill in:
 
-## Learn More
+- `RESEND_API_KEY`, `CONTACT_FROM_EMAIL` (a verified Resend sender), `CONTACT_TO_EMAIL` (where messages arrive)
+- `NEXT_PUBLIC_CONTACT_EMAIL` (optional): shown in the footer and as a `mailto:` fallback when sending fails
 
-To learn more about Next.js, take a look at the following resources:
+Without these the form shows a "not configured" message instead of failing silently.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Projects
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+The Projects section lists your top public non-fork repos from GitHub (`profile.github`), cached for 1 hour. It hides itself if GitHub is unreachable.
 
-## Deploy on Vercel
+## Email deliverability checklist
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Code side (already done): sent from your verified domain with the visitor only in `Reply-To`, `[Landing Page]` subject prefix, plain-text + HTML parts with escaped content, idempotent sends with one retry.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+DNS side (you must do this in your domain provider; Resend shows the exact records):
+
+1. **SPF** and **DKIM**: add the records Resend gives you under Domains and wait for "Verified".
+2. **DMARC**: add a TXT record on `_dmarc.yourdomain.com`, e.g. `v=DMARC1; p=none; rua=mailto:you@yourdomain.com`, then tighten to `quarantine` once reports look clean.
+3. Send from a subdomain (e.g. `mail.yourdomain.com`) to protect your main domain's reputation.
+4. Set `CONTACT_FROM_EMAIL` to an address on that verified domain; never use the visitor's address as sender.
+5. Send yourself a test and mark it "Not spam" once; add the sender to your contacts so replies stay out of spam.
