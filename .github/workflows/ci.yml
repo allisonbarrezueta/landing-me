@@ -24,7 +24,8 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run lint
-      - run: npm run typecheck
       - run: npm test
+      # build generates next-env.d.ts (gitignored), which typecheck needs for image imports
       - run: npm run build
+      - run: npm run typecheck
       - run: npm audit --audit-level=high
