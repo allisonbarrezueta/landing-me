@@ -4,6 +4,7 @@ import "../styles/globals.css";
 import SiteHeader from "@/components/layout/site-header";
 import SiteFooter from "@/components/layout/site-footer";
 import { profile } from "@/data/profile";
+import { socials } from "@/data/socials";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -28,6 +29,15 @@ export const viewport: Viewport = {
 // Runs before first paint so the saved/system theme is applied without a flash.
 const themeScript = `try{var t=localStorage.getItem("theme");if(t==="dark"||(!t&&matchMedia("(prefers-color-scheme: dark)").matches))document.documentElement.classList.add("dark")}catch(e){}`;
 
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: profile.name,
+  jobTitle: profile.role,
+  url: profile.siteUrl,
+  sameAs: socials.filter((s) => s.href.startsWith("http")).map((s) => s.href),
+};
+
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>): React.JSX.Element {
   return (
     <html lang="en" suppressHydrationWarning>
@@ -38,6 +48,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <SiteHeader />
         {children}
         <SiteFooter />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       </body>
     </html>
   );
